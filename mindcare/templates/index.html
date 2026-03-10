@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindCare – AI Mental Health Companion</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <!-- Chart.js for mood graph -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="brand-icon">🧠</span>
+    <span class="brand-name">Mind<span class="accent">Care</span></span>
+  </div>
+  <div class="nav-links">
+    <a href="/" class="nav-link active">Chat</a>
+    <a href="/dashboard" class="nav-link">Dashboard</a>
+  </div>
+</nav>
+
+<!-- ── Main layout: two columns ───────────────────────────────────────── -->
+<main class="app-layout">
+
+  <!-- LEFT COLUMN: Chatbot -->
+  <section class="card chat-card">
+    <div class="card-header">
+      <div class="avatar-wrap">
+        <div class="avatar">🤍</div>
+        <div class="status-dot"></div>
+      </div>
+      <div>
+        <h2 class="card-title">MindCare</h2>
+        <p class="card-subtitle">Your AI mental health companion</p>
+      </div>
+    </div>
+
+    <!-- Chat message area -->
+    <div class="chat-messages" id="chatMessages">
+      <!-- Welcome message injected by JS -->
+    </div>
+
+    <!-- Input bar -->
+    <div class="chat-input-area">
+      <input
+        type="text"
+        id="chatInput"
+        class="chat-input"
+        placeholder="How are you feeling today?"
+        autocomplete="off"
+      />
+      <button id="sendBtn" class="send-btn" onclick="sendMessage()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Quick-start prompts -->
+    <div class="quick-prompts">
+      <button class="chip" onclick="usePrompt(this)">😰 Exam anxiety</button>
+      <button class="chip" onclick="usePrompt(this)">😔 Feeling overwhelmed</button>
+      <button class="chip" onclick="usePrompt(this)">😴 Can't focus</button>
+      <button class="chip" onclick="usePrompt(this)">💭 Need motivation</button>
+    </div>
+  </section>
+
+  <!-- RIGHT COLUMN: Mood Tracker + Study Scheduler -->
+  <aside class="side-panel">
+
+    <!-- Mood Tracker -->
+    <section class="card mood-card">
+      <h2 class="card-title">📊 Daily Mood Check-in</h2>
+      <p class="card-subtitle">How are you feeling right now?</p>
+
+      <div class="mood-grid">
+        <button class="mood-btn" data-mood="happy"   onclick="logMood(this)">😊<span>Happy</span></button>
+        <button class="mood-btn" data-mood="calm"    onclick="logMood(this)">😌<span>Calm</span></button>
+        <button class="mood-btn" data-mood="tired"   onclick="logMood(this)">😴<span>Tired</span></button>
+        <button class="mood-btn" data-mood="stressed" onclick="logMood(this)">😣<span>Stressed</span></button>
+        <button class="mood-btn" data-mood="anxious" onclick="logMood(this)">😰<span>Anxious</span></button>
+      </div>
+
+      <div id="moodFeedback" class="mood-feedback hidden"></div>
+
+      <!-- Mini mood chart -->
+      <div class="chart-wrap">
+        <canvas id="moodChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Study Scheduler -->
+    <section class="card study-card">
+      <h2 class="card-title">📅 Study Schedule Builder</h2>
+      <p class="card-subtitle">Let's plan your revision calmly</p>
+
+      <div class="form-group">
+        <label class="form-label">Subject / Topic</label>
+        <input type="text" id="subjectInput" class="form-input" placeholder="e.g. Calculus, History" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Exam Date</label>
+        <input type="date" id="examDate" class="form-input" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Hours available per day</label>
+        <input type="number" id="hoursPerDay" class="form-input" min="1" max="8" value="2" />
+      </div>
+      <button class="btn-primary" onclick="generateSchedule()">Generate My Plan ✨</button>
+
+      <div id="scheduleOutput" class="schedule-output hidden"></div>
+    </section>
+
+  </aside>
+</main>
+
+<!-- Crisis resources footer -->
+<footer class="crisis-bar">
+  <span>🆘 In crisis? </span>
+  <strong>988 Suicide & Crisis Lifeline: call/text 988</strong>
+  <span> | Crisis Text Line: Text <strong>HOME</strong> to <strong>741741</strong></span>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

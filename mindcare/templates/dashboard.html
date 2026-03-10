@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindCare – Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="brand-icon">🧠</span>
+    <span class="brand-name">Mind<span class="accent">Care</span></span>
+  </div>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Chat</a>
+    <a href="/dashboard" class="nav-link active">Dashboard</a>
+  </div>
+</nav>
+
+<main class="dashboard-layout">
+
+  <!-- Page heading -->
+  <header class="dash-header">
+    <div>
+      <h1 class="dash-title">Your <em>Wellness</em> Dashboard</h1>
+      <p class="dash-subtitle">Track your mood, celebrate progress, and find balance.</p>
+    </div>
+    <div id="dashDate" class="dash-date"></div>
+  </header>
+
+  <!-- Stats row -->
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <div class="stat-value" id="statEntries">–</div>
+      <div class="stat-label">Mood Check-ins</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">⭐</div>
+      <div class="stat-value" id="statAvg">–</div>
+      <div class="stat-label">Avg. Mood Score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🏆</div>
+      <div class="stat-value" id="statMood">–</div>
+      <div class="stat-label">Most Common Mood</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🔥</div>
+      <div class="stat-value" id="statStreak">–</div>
+      <div class="stat-label">Day Streak</div>
+    </div>
+  </div>
+
+  <!-- Charts row -->
+  <div class="charts-row">
+    <!-- Big mood trend line chart -->
+    <div class="card chart-card-large">
+      <h2 class="card-title">📈 14-Day Mood Trend</h2>
+      <p class="card-subtitle">Your emotional journey over the past two weeks</p>
+      <div class="chart-wrap-large">
+        <canvas id="trendChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Mood distribution doughnut -->
+    <div class="card chart-card-small">
+      <h2 class="card-title">🥧 Mood Breakdown</h2>
+      <p class="card-subtitle">Proportion of each mood logged</p>
+      <div class="chart-wrap-small">
+        <canvas id="donutChart"></canvas>
+      </div>
+      <div id="legendWrap" class="legend-wrap"></div>
+    </div>
+  </div>
+
+  <!-- Tips section -->
+  <section class="card tips-card">
+    <h2 class="card-title">💡 Today's Wellbeing Tips</h2>
+    <p class="card-subtitle">Evidence-based strategies to reduce stress and boost focus</p>
+    <div class="tips-grid" id="tipsGrid">
+      <!-- Loaded by JS -->
+      <div class="tip-skeleton"></div>
+      <div class="tip-skeleton"></div>
+      <div class="tip-skeleton"></div>
+      <div class="tip-skeleton"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="crisis-bar">
+  <span>🆘 In crisis? </span>
+  <strong>988 Suicide & Crisis Lifeline: call/text 988</strong>
+  <span> | Crisis Text Line: Text <strong>HOME</strong> to <strong>741741</strong></span>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+  // Dashboard-specific initialisation
+  document.getElementById("dashDate").textContent =
+    new Date().toLocaleDateString("en-US", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
+  initDashboard();
+</script>
+</body>
+</html>
